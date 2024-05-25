@@ -1,4 +1,10 @@
 
+**Documentation built by Developers**
+
+Each element is well presented in very complex documentation.
+
+You can read more about the [documentation here](https://material-dashboard-react-node-docs.creative-tim.com/react/login/material-dashboard-node/).
+
 **Example Pages**
 
 If you want to get inspiration or just show something directly to your clients, you can jump-start your development with our pre-built example pages. You will be able to quickly set up the basic structure for your web project.
