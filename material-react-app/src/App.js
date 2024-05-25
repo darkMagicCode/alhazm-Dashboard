@@ -39,7 +39,7 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
 import { setupAxiosInterceptors } from "./services/interceptor";
-// import ProtectedRoute from "examples/ProtectedRoute";
+import ProtectedRoute from "examples/ProtectedRoute";
 import ForgotPassword from "auth/forgot-password";
 import ResetPassword from "auth/reset-password";
 import Login from "auth/login";
@@ -132,9 +132,9 @@ export default function App() {
             exact
             path={route.route}
             element={
-              // <ProtectedRoute isAuthenticated={authContext.isAuthenticated}>
-                route.component
-              // </ProtectedRoute>
+              <ProtectedRoute isAuthenticated={authContext.isAuthenticated}>
+                {route.component}
+              </ProtectedRoute>
             }
             key={route.key}
           />
@@ -282,9 +282,9 @@ export default function App() {
               exact
               path="user-profile"
               element={
-                // <ProtectedRoute isAuthenticated={authContext.isAuthenticated}>
+                <ProtectedRoute isAuthenticated={authContext.isAuthenticated}>
                   <UserProfile />
-                // </ProtectedRoute>
+                </ProtectedRoute>
               }
               key="user-profile"
             />
@@ -292,9 +292,9 @@ export default function App() {
               exact
               path="user-management"
               element={
-                // <ProtectedRoute isAuthenticated={authContext.isAuthenticated}>
+                <ProtectedRoute isAuthenticated={authContext.isAuthenticated}>
                   <UserManagement />
-                // </ProtectedRoute>
+                </ProtectedRoute>
               }
               key="user-management"
             />
