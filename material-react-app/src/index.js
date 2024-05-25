@@ -27,10 +27,10 @@ const root = createRoot(rootElement);
 
 root.render(
   <BrowserRouter>
-    {/* <AuthContextProvider> */}
+    <AuthContextProvider>
       <MaterialUIControllerProvider>
         <App />
       </MaterialUIControllerProvider>
-    {/* </AuthContextProvider> */}
+    </AuthContextProvider>
   </BrowserRouter>
 );

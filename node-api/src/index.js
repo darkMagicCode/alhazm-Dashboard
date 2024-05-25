@@ -42,7 +42,7 @@ app.use("/me", meRoutes);
 
 if (process.env.SCHEDULE_HOUR) {
   cron.schedule(`0 */${process.env.SCHEDULE_HOUR} * * *'`, () => {
-    ReseedAction();
+     ReseedAction();
   });
 }
 
