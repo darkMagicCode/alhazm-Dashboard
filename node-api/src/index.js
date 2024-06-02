@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import "./passport.js";
 import { dbConnect } from "./mongo/index.js";
-import { meRoutes, authRoutes } from "./routes/index.js";
+import { meRoutes, authRoutes, carsRoutes } from "./routes/index.js";
 import path from "path";
 import * as fs from "fs";
 import cron from "node-cron";
@@ -30,8 +30,7 @@ const corsOptions = {
 dbConnect();
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json({ type: "application/vnd.api+json", strict: false }));
-
+app.use(bodyParser.json({ limit: "10mb", type: "application/json", strict: false }));
 app.get("/", function (req, res) {
   const __dirname = fs.realpathSync(".");
   res.sendFile(path.join(__dirname, "/src/landing/index.html"));
@@ -39,10 +38,11 @@ app.get("/", function (req, res) {
 
 app.use("/", authRoutes);
 app.use("/me", meRoutes);
+app.use("/cars", carsRoutes);
 
 if (process.env.SCHEDULE_HOUR) {
   cron.schedule(`0 */${process.env.SCHEDULE_HOUR} * * *'`, () => {
-     ReseedAction();
+    ReseedAction();
   });
 }
 
