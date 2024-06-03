@@ -9,6 +9,7 @@ import path from "path";
 import * as fs from "fs";
 import cron from "node-cron";
 import ReseedAction from "./mongo/ReseedAction.js";
+import mongoose  from 'mongoose';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 const whitelist = [process.env.APP_URL_CLIENT];
-const corsOptions = {
+const corsOptions1 = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -26,8 +27,14 @@ const corsOptions = {
   },
   credentials: true,
 };
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
 
 dbConnect();
+
+mongoose.set('strictQuery', true); // Or false, depending on your needs
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "10mb", type: "application/json", strict: false }));

@@ -4,7 +4,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Input } from "@mui/material";
 import axios from "axios";
 
-const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
+const NewModalComp = ({
+  show,
+  handleClose,
+  onSave,
+  modalData,
+  modalName,
+  fetchData,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [data, setData] = useState(null);
@@ -24,6 +31,8 @@ const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
       // Check for successful response
       if (response.status !== 201) {
         throw new Error("Failed to create the car");
+      } else {
+        fetchData();
       }
       console.log(response.data);
       const newItem = response.data;
@@ -43,6 +52,9 @@ const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
       // Check for successful response
       if (response.status !== 200) {
         throw new Error("Failed to create the car");
+      } else {
+        fetchData();
+        handleClose();
       }
       console.log(response.data);
       const newItem = response.data;
@@ -51,6 +63,25 @@ const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
       setError(error);
     }
   };
+  const handleDelete = async (formData) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/cars/${modalData._id}`
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to create the car");
+      } else {
+        fetchData();
+        handleClose();
+
+      }
+      fetchData();
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const handleFileChange = async (e, setFieldValue, values, index) => {
     const files = e.target.files;
 
@@ -78,8 +109,8 @@ const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
   const addField = (values, setFieldValue) => {
     if (!values.images) {
       // const newImages = [...values.images, ""];
-      setFieldValue("images",[ ""]);
-      setImagePreviews(['']);
+      setFieldValue("images", [""]);
+      setImagePreviews([""]);
     } else {
       const newImages = [...values.images, ""];
       setFieldValue("images", newImages);
@@ -108,8 +139,9 @@ const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values, { resetForm }) => {
-            modalName === "add new car" ? handleCreate(values) :
-            handleUpdate(values);
+            modalName === "add new car"
+              ? handleCreate(values)
+              : handleUpdate(values);
             handleClose();
             setImagePreviews([]);
             resetForm();
@@ -207,6 +239,9 @@ const NewModalComp = ({ show, handleClose, onSave, modalData ,modalName }) => {
                 </Button>
               </div>
               <Modal.Footer>
+                <Button variant="danger" onClick={handleDelete}>
+                  delete
+                </Button>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>

@@ -11,7 +11,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MDBadge from "components/MDBadge";
 import team2 from "assets/images/team-2.jpg";
 import MDAvatar from "components/MDAvatar";
@@ -35,22 +35,22 @@ function Tables() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/cars");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        console.log(result);
-        setData(result);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/cars");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const result = await response.json();
+      console.log(result);
+      setData(result);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
 
     fetchData();
   }, []);
@@ -135,8 +135,8 @@ function Tables() {
     { Header: "action", accessor: "action", align: "center" },
   ];
 
-  const rows =
-    data?.length > 0
+  const rows = useMemo(() => {
+    return data?.length > 0
       ? data?.map((item, index) => ({
           name: (
             <Author
@@ -145,7 +145,7 @@ function Tables() {
               email=""
             />
           ),
-          description: <Job title={item.desc} description={''}/>,
+          description: <Job title={item.desc} description={''} />,
           status: (
             <MDBox ml={-1}>
               <MDBadge
@@ -181,6 +181,8 @@ function Tables() {
           ),
         }))
       : [];
+  }, [data, handleEditCar]);
+
   return (
     <>
       <DashboardLayout>
@@ -217,8 +219,8 @@ function Tables() {
           </Grid>
         </MDBox>
         <Footer />
-        <NewModalComp show={open} handleClose={handleClose} modalData={modalData} modalName={modalName}/>
       </DashboardLayout>
+        <NewModalComp show={open} handleClose={handleClose} modalData={modalData} modalName={modalName} fetchData={fetchData}/>
     </>
   );
 }
