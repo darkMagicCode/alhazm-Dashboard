@@ -26,7 +26,7 @@ const NewModalComp = ({
 
   const handleCreate = async (formData) => {
     try {
-      const response = await axios.post("http://localhost:8080/cars", formData);
+      const response = await axios.post("https://alhazm-dashboard.onrender.com/cars", formData);
 
       // Check for successful response
       if (response.status !== 201) {
@@ -45,7 +45,7 @@ const NewModalComp = ({
   const handleUpdate = async (formData) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/cars/${modalData._id}`,
+        `https://alhazm-dashboard.onrender.com/cars/${modalData._id}`,
         formData
       );
 
@@ -66,7 +66,7 @@ const NewModalComp = ({
   const handleDelete = async (formData) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/cars/${modalData._id}`
+        `https://alhazm-dashboard.onrender.com/cars/${modalData._id}`
       );
 
       if (response.status !== 200) {

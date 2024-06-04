@@ -37,7 +37,7 @@ function Tables() {
   const [error, setError] = useState(null);
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/cars");
+      const response = await fetch("https://alhazm-dashboard.onrender.com/cars");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
