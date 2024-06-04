@@ -186,7 +186,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 alignItems="center"
                 color={light ? "white" : "inherit"}
               >
-                <div className="px-5 ">
+                <div className="px-2 ">
                   {/* <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
@@ -204,7 +204,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     </Icon>
                   </IconButton>
                 </div>
-                <div className="px-5 ">
+                <div className="px-2 ">
                   <IconButton
                     size="small"
                     disableRipple
