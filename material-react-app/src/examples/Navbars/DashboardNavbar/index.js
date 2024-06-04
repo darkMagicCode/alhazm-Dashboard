@@ -61,7 +61,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const authContext = useContext(AuthContext);
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
+  const {
+    miniSidenav,
+    transparentNavbar,
+    fixedNavbar,
+    openConfigurator,
+    darkMode,
+  } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
   let navigate = useNavigate();
@@ -76,7 +82,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     // A function that sets the transparent state of the navbar.
     function handleTransparentNavbar() {
-      setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
+      setTransparentNavbar(
+        dispatch,
+        (fixedNavbar && window.scrollY === 0) || !fixedNavbar
+      );
     }
 
     /** 
@@ -93,7 +102,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpen = () =>
+    setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
@@ -111,13 +121,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
       sx={{ mt: 2 }}
     >
       <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
-      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      <NotificationItem
+        icon={<Icon>podcasts</Icon>}
+        title="Manage Podcast sessions"
+      />
+      <NotificationItem
+        icon={<Icon>shopping_cart</Icon>}
+        title="Payment successfully completed"
+      />
     </Menu>
   );
 
   // Styles for the navbar icons
-  const iconsStyle = ({ palette: { dark, white, text }, functions: { rgba } }) => ({
+  const iconsStyle = ({
+    palette: { dark, white, text },
+    functions: { rgba },
+  }) => ({
     color: () => {
       let colorValue = light || darkMode ? white.main : dark.main;
 
@@ -138,44 +157,80 @@ function DashboardNavbar({ absolute, light, isMini }) {
     <AppBar
       position={absolute ? "absolute" : navbarType}
       color="inherit"
-      sx={(theme) => navbar(theme, { transparentNavbar, absolute, light, darkMode })}
+      sx={(theme) =>
+        navbar(theme, { transparentNavbar, absolute, light, darkMode })
+      }
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
-        <MDBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
+        <MDBox
+          color="inherit"
+          mb={{ xs: 3, md: 0 }}
+          sx={(theme) => navbarRow(theme, { isMini })}
+        >
+          <Breadcrumbs
+            icon="home"
+            title={route[route.length - 1]}
+            route={route}
+            light={light}
+          />
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
+            {/* <MDBox pr={1}>
               <MDInput label="Search here" />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+            </MDBox> */}
+
+            <div className=" w-100 d-flex justify-content-between align-items-center">
+              <MDBox
+                display="flex"
+                alignItems="center"
+                color={light ? "white" : "inherit"}
+              >
+                <div className="px-5 ">
+                  {/* <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
-              </Link>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarMobileMenu}
-                onClick={handleMiniSidenav}
-              >
-                <Icon sx={iconsStyle} fontSize="medium">
-                  {miniSidenav ? "menu_open" : "menu"}
-                </Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon sx={iconsStyle}>settings</Icon>
-              </IconButton>
-              <IconButton
+              </Link> */}
+                  <IconButton
+                    size="large"
+                    disableRipple
+                    color="warning"
+                    sx={navbarMobileMenu}
+                    onClick={handleMiniSidenav}
+                  >
+                    <Icon sx={iconsStyle} fontSize="medium" className="text-warning">
+                      {miniSidenav ? "menu_open" : "menu"}
+                    </Icon>
+                  </IconButton>
+                </div>
+                <div className="px-5 ">
+                  <IconButton
+                    size="small"
+                    disableRipple
+                    color="inherit"
+                    sx={navbarIconButton}
+                    onClick={handleConfiguratorOpen}
+                  >
+                    <Icon sx={iconsStyle}>settings</Icon>
+                  </IconButton>
+                </div>
+                <div className="px-1 ">
+                  {renderMenu()}
+                  <MDBox>
+                    <MDButton
+                      variant="gradient"
+                      color="info"
+                      fullWidth
+                      type="button"
+                      onClick={handleLogOut}
+                    >
+                      Log Out
+                    </MDButton>
+                  </MDBox>
+                </div>
+
+                {/* <IconButton
                 size="small"
                 disableRipple
                 color="inherit"
@@ -186,20 +241,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleOpenMenu}
               >
                 <Icon sx={iconsStyle}>notifications</Icon>
-              </IconButton>
-              {renderMenu()}
-              <MDBox>
-                <MDButton
-                  variant="gradient"
-                  color="info"
-                  fullWidth
-                  type="button"
-                  onClick={handleLogOut}
-                >
-                  Log Out
-                </MDButton>
+              </IconButton> */}
               </MDBox>
-            </MDBox>
+            </div>
           </MDBox>
         )}
       </Toolbar>

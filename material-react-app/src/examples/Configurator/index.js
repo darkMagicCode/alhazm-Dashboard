@@ -138,7 +138,7 @@ function Configurator() {
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5">Material UI Configurator</MDTypography>
+          <MDTypography variant="h5">Al-Hazm</MDTypography>
           <MDTypography variant="body2" color="text">
             See our dashboard options.
           </MDTypography>
@@ -209,12 +209,12 @@ function Configurator() {
         </MDBox>
 
         <MDBox mt={3} lineHeight={1}>
-          <MDTypography variant="h6">Sidenav Type</MDTypography>
+          {/* <MDTypography variant="h6">Sidenav Type</MDTypography>
           <MDTypography variant="button" color="text">
             Choose between different sidenav types.
-          </MDTypography>
+          </MDTypography> */}
 
-          <MDBox
+          {/* <MDBox
             sx={{
               display: "flex",
               mt: 2,
@@ -265,9 +265,9 @@ function Configurator() {
             >
               White
             </MDButton>
-          </MDBox>
+          </MDBox> */}
         </MDBox>
-        <MDBox
+        {/* <MDBox
           display="flex"
           justifyContent="space-between"
           alignItems="center"
@@ -277,7 +277,7 @@ function Configurator() {
           <MDTypography variant="h6">Navbar Fixed</MDTypography>
 
           <Switch checked={fixedNavbar} onChange={handleFixedNavbar} />
-        </MDBox>
+        </MDBox> */}
         <Divider />
         <MDBox display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <MDTypography variant="h6">Light / Dark</MDTypography>
@@ -285,7 +285,7 @@ function Configurator() {
           <Switch checked={darkMode} onChange={handleDarkMode} />
         </MDBox>
         <Divider />
-        <MDBox mt={3} mb={2}>
+        {/* <MDBox mt={3} mb={2}>
           <MDButton
             component={Link}
             href="https://material-dashboard-react-node-docs.creative-tim.com/react/project-installation/material-dashboard-node/"
@@ -338,7 +338,7 @@ function Configurator() {
               &nbsp; Share
             </MDButton>
           </MDBox>
-        </MDBox>
+        </MDBox> */}
       </MDBox>
     </ConfiguratorRoot>
   );

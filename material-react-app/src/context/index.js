@@ -88,7 +88,7 @@ const AuthContextProvider = ({ children }) => {
 };
 
 // Setting custom name for the context which is visible on react dev tools
-MaterialUI.displayName = "MaterialUIContext";
+MaterialUI.displayName = "AL-Hazm";
 
 // Material Dashboard 2 React reducer
 function reducer(state, action) {
@@ -141,7 +141,7 @@ function MaterialUIControllerProvider({ children }) {
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
-    darkMode: false,
+    darkMode: true,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);

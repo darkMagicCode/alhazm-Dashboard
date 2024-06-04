@@ -16,20 +16,20 @@ import MDBadge from "components/MDBadge";
 import team2 from "assets/images/team-2.jpg";
 import MDAvatar from "components/MDAvatar";
 import NewModalComp from "./data/NewModalComp";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { PlusOne } from "@mui/icons-material";
 function Tables() {
   const [open, setOpen] = React.useState(false);
   const [modalData, setModalData] = React.useState();
-  const [modalName, setModalName] = React.useState('');
+  const [modalName, setModalName] = React.useState("");
   const handleEditCar = (item) => {
     setModalData(item);
-    setModalName('edit car');
+    setModalName("edit car");
     setOpen(true);
   };
   const handleAddNewCar = () => {
     setModalData({});
-    setModalName('add new car');
+    setModalName("add new car");
     setOpen(true);
   };
   const [data, setData] = useState(null);
@@ -37,7 +37,9 @@ function Tables() {
   const [error, setError] = useState(null);
   const fetchData = async () => {
     try {
-      const response = await fetch("https://alhazm-dashboard.onrender.com/cars");
+      const response = await fetch(
+        "https://alhazm-dashboard.onrender.com/cars"
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -51,7 +53,6 @@ function Tables() {
     }
   };
   useEffect(() => {
-
     fetchData();
   }, []);
   const handleCreate = async (e) => {
@@ -138,14 +139,8 @@ function Tables() {
   const rows = useMemo(() => {
     return data?.length > 0
       ? data?.map((item, index) => ({
-          name: (
-            <Author
-              image={item.images[0]}
-              name={item.name}
-              email=""
-            />
-          ),
-          description: <Job title={item.desc} description={''} />,
+          name: <Author image={item.images[0]} name={item.name} email="" />,
+          description: <Job title={item.desc} description={""} />,
           status: (
             <MDBox ml={-1}>
               <MDBadge
@@ -168,16 +163,17 @@ function Tables() {
             </MDTypography>
           ),
           action: (
-            <MDTypography
-              component="a"
-              href="#"
-              variant="caption"
-              color="text"
-              fontWeight="medium"
+            <div
+            className="btn btn-outline-warning"
+              // component="a"
+              // href="#"
+              // variant="caption"
+              // color="text"
+              // fontWeight="medium"
               onClick={() => handleEditCar(item)} // Call handleOpen with data
             >
               Edit
-            </MDTypography>
+            </div>
           ),
         }))
       : [];
@@ -199,20 +195,35 @@ function Tables() {
                   variant="gradient"
                   bgColor="info"
                   borderRadius="lg"
-                  coloredShadow="info"  
+                  coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    <Button color="white" className="btn btn-white" size="small"  variant="outlined" onClick={handleAddNewCar}>Add New</Button>
+                    <div
+                      // color="warning"
+                      className="btn  btn-warning"
+                      // size="small"
+                      // variant="outlined"
+                      onClick={handleAddNewCar}
+                    >
+                      Add New
+                    </div>
                   </MDTypography>
                 </MDBox>
                 <MDBox pt={3}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
+                  {!data ? (
+                    <div className=" d-flex justify-content-center">
+                      <CircularProgress />
+
+                    </div>
+                  ) : (
+                    <DataTable
+                      table={{ columns, rows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  )}
                 </MDBox>
               </Card>
             </Grid>
@@ -220,7 +231,13 @@ function Tables() {
         </MDBox>
         <Footer />
       </DashboardLayout>
-        <NewModalComp show={open} handleClose={handleClose} modalData={modalData} modalName={modalName} fetchData={fetchData}/>
+      <NewModalComp
+        show={open}
+        handleClose={handleClose}
+        modalData={modalData}
+        modalName={modalName}
+        fetchData={fetchData}
+      />
     </>
   );
 }
